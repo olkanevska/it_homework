@@ -6,7 +6,7 @@ puts " This elements with even indexes:"
 
 arr.each_with_index do | item,index |
   if index %2 == 0
-    puts index
+    puts item
   end
 end
 
