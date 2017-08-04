@@ -1,0 +1,23 @@
+ 1. What is 'git stash' and how to use it?
+  Stashing takes the dirty state of your working directory — that is, your modified tracked files and staged changes — and saves it on a stack of unfinished changes that you can reapply at any time.
+ To push a new stash onto your stack, run git stash.
+ To see which stashes you’ve stored, you can use git stash list.
+ You can reapply the one you just stashed by using the command shown in the help output of the original stash command: git stash apply. 
+ The changes to your files were reapplied, but the file you staged before wasn’t restaged. To do that, you must run the git stash apply command with a --index option to tell the command to try to reapply the staged changes.
+ To remove it, you can run git stash drop with the name of the stash to remove.
+ You can also run git stash pop to apply the stash and then immediately drop it from your stack.
+  If you want an easier way to test the stashed changes again, you can run git stash branch, which creates a new branch for you, checks out the commit you were on when you stashed your work, reapplies your work there, and then drops the stash if it applies successfully.
+ 
+ 2. What is 'git reset' and when we shouldn't use it?
+ The reset command overwrites these three trees in a specific order, stopping when you tell it to:
+ Move the branch HEAD points to (stop here if --soft)
+ Make the Index look like HEAD (stop here unless --hard)
+ Make the Working Directory look like the Index
+ 
+ checkout (commit) [file], reset (commit) [file] , take a second to think before running that command.
+ 
+ 3.When we need cherry-pick, and how does it happens?
+ The git cherry-pick command is used to take the change introduced in a single Git commit and try to re-introduce it as a new commit on the branch you’re currently on. This can be useful to only take one or two commits from a branch individually rather than merging in the branch which takes all the changes.
+ 
+ 4.What does do 'git rm ..' command and what not?
+ Remove files from the index, or from the working tree and the index. git rm will not remove a file from just your working directory.
