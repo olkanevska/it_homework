@@ -3,7 +3,7 @@ arr = [6,7,1,1,1,5,1,11,7,15,10]
 
 arr2=[]
 arr.each_with_index do | item,index |
-  if item<arr[-1] and item>arr[0]
+  if item<arr[-1] && item>arr[0]
     arr2 << index
   end
 end
