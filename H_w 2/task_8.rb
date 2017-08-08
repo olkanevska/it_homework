@@ -2,6 +2,6 @@
 
 hash = {'Dima'=>'30', 'Lena'=>'31'}
 
-new_hash = Hash[ hash.map { |k, v| [k.to_sym, v.to_i] } ]
+hash = Hash[ hash.map { |k, v| [k.to_sym, v.to_i] } ]
 
-puts new_hash
+puts hash
