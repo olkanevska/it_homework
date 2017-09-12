@@ -5,8 +5,9 @@ while i< 11
   x = rand(0..9)
 
   if x.even?
-    print"#{i}. The number: #{x}, is even, "
-  else print"#{i}. The number: #{x}, is odd, "
+    print "#{i}. The number: #{x}, is even, "
+  else
+   print "#{i}. The number: #{x}, is odd, "
   end
 
   if x > 5
