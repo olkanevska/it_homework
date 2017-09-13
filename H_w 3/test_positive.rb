@@ -205,46 +205,44 @@ class TestRegistration < Test::Unit::TestCase
   end
 
   def test_create_or_not_bug_issue
+
     register_user
     add_new_project
 
     x = rand(1..2)
-
     if x == 1
-      add_new_issue
-      puts"Your random action isn't create a new bug issue"
-     else puts"Your random action is create a new bug issue"
+    add_new_issue
+    puts "Your random action: create a new bug issue"
+    else
+    puts "Your random action: not create a new bug issue"
     end
 
     @driver.find_element(:class,'my-page').click
-
     @wait.until {@driver.find_element(:class,'mypage-box').displayed?}
 
     classes_els = @driver.find_elements(:css,'.subject > a')
-    my_element = classes_els.find {|el| el.text.include? @bug_issue}
-
-    if my_element == nil
+    my_bug_issue = classes_els.find {|el| el.text.include? @bug_issue}
+    if my_bug_issue
+      my_bug_issue.click
+    else
       drop_down_project = @driver.find_element(:id,'project_quick_jump_box')
       option = Selenium::WebDriver::Support::Select.new(drop_down_project)
       option.select_by(:text, @project_name)
       add_new_issue
-      else my_element.click
     end
 
     @wait.until {@driver.find_element(:class,'contextual').displayed?}
     @driver.find_element(:class,'contextual').click
 
-    @wait.until {@driver.find_element(:css,'#users_for_watcher > label:nth-child(1)').displayed?}
-
-    watcher = @driver.find_elements(:css,'#users_for_watcher > label:nth-child(1)')
+    @wait.until {@driver.find_element(:id,'ui-id-3').displayed?}
+    watcher = @driver.find_elements(:css,'#users_for_watcher > label')
     my_watcher = watcher.find {|el| el.text.include? 'Olena Kanevska'}
     my_watcher.click
+    @driver.find_element(:css,'.buttons>input[type="submit"]').click
 
-    @driver.find_element(:css,'.buttons > input:nth-child(1)').click
-
-    classes_els = @driver.find_elements(:class,'subject')
+    issue = @driver.find_elements(:class,'subject')
     classes_watch = @driver.find_elements(:class,'watchers')
-    assert classes_els.find {|el| el.text.include? @bug_issue} && classes_watch.find {|el| el.text.include? 'Olena Kanevska'}
+    assert issue.find {|el| el.text.include? @bug_issue} && classes_watch.find {|el| el.text.include? 'Olena Kanevska'}
   end
 
   def teardown
