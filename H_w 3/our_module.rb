@@ -115,7 +115,7 @@ module OurModule
 
     @wait.until {@driver.find_element(:css,'#tab-content-versions .icon-add').displayed?}
     @driver.find_element(:css,'#tab-content-versions .icon-add').click
-    
+
     @wait.until {@driver.find_element(:id, 'version_name').displayed?}
 
     @name_version = ('version' + rand(999999).to_s)
@@ -130,9 +130,14 @@ module OurModule
 
   def add_new_issue
 
-    @driver.find_element(:id, 'issue_subject').send_keys 'Exhaustive testing is impossible'
+    @driver.find_element(:class,'new-issue').click
+    @wait.until {@driver.find_element(:id,'issue_tracker_id').displayed?}
 
-    @driver.find_element(:name,'issue[status_id]').click
+    @bug_issue = ('issue' + rand(999999).to_s)
+
+    @driver.find_element(:id, 'issue_subject').send_keys @bug_issue
+
+    @driver.find_element(:name,'commit').click
 
   end
 
