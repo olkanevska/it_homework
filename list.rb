@@ -10,7 +10,7 @@ class List
    @board = board
   end
 
-  def add_card(card_title,list,user)
+  def add_card(card_title,user)
    card = Card.new(card_title,self, user)
    @cards << card
    card
