@@ -2,7 +2,8 @@ require 'faker'
 require_relative 'comment'
 class Card
 
-  attr_reader :card_title,:current_list,:author,:comments,:content
+  attr_reader :card_title,:author,:comments,:content
+  attr_writer :current_list
   def initialize (card_title,list,user)
     @card_title = card_title
     @current_list = list
