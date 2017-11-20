@@ -45,18 +45,16 @@ sleep 4
 
 # user adds a comment to card
 comment1 = user2.add_comment(card1)
+comment2 = user1.add_comment(card1)
 puts "\n=================================================================\n"
 sleep 7
 
 # user removes a comment
 user2.remove_comment(comment1, card1)
-if card1.comments.size != 0
-  puts card1.comments
-else
-  print "\nNow the card '#{card1.card_title}' has no comments.\n"
-end
+user1.remove_comment(comment2, card1)
 puts "\n=================================================================\n"
 sleep 5
+
 # user moves a card to another list
 user1.move_card_to_another_list(card1, list_meat , list_diner)
 user1.info_card_on_list(list_meat)
