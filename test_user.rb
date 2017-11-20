@@ -46,7 +46,7 @@ class TestUser < Test::Unit::TestCase
     list = user.add_list(board,"my car")
     card = user.add_card("shcoda",list)
     comment = user.add_comment(card)
-    user.removes_comment(comment, card)
+    user.remove_comment(comment, card)
     assert_false(card.comments.include?(comment))
   end
 
