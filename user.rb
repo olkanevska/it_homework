@@ -91,6 +91,12 @@ class User
   def remove_comment(comment, card)
     puts "\nUser #{self.name} removed his comment from the card '#{card.card_title}'.\n"
     card.remove_comment(comment)
+    unless card.comments.empty?
+      puts "\nNow card '#{card.card_title}' has the following comments:\n"
+      puts card.comments
+    else
+      print "\nNow the card '#{card.card_title}' has no comments.\n"
+    end
   end
 
   def to_s
