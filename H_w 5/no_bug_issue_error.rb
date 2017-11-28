@@ -1,0 +1,2 @@
+class NoBugIssueError < StandardError
+end
