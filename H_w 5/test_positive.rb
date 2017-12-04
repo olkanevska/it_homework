@@ -257,14 +257,9 @@ class TestPositive < Test::Unit::TestCase
     else
       puts "Your random action: not create a new bug issue"
     end
-
-    @driver.find_element(:class,'my-page').click
-    @wait.until {@driver.find_element(:class,'mypage-box').displayed?}
-
-    classes_els = @driver.find_elements(:css,'.subject > a')
-    my_bug_issue = classes_els.find {|el| el.text.include? @bug_issue}
-
+    open_bug_issue
     raise NoBugIssueError, "You not create a bug issue. You can not click to bug issue." unless my_bug_issue
+    
     my_bug_issue.click
   rescue NoBugIssueError => e
     puts e.inspect
@@ -274,6 +269,8 @@ class TestPositive < Test::Unit::TestCase
     option.select_by(:text, @project_name)
     puts "Now your create a new bug issue"
     add_new_issue
+    open_bug_issue
+    @my_bug_issue.click   
 
     issue = @driver.find_elements(:class,'subject')
 
