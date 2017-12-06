@@ -225,7 +225,7 @@ class TestPositive < Test::Unit::TestCase
     classes_els = @driver.find_elements(:css,'.subject > a')
     my_bug_issue = classes_els.find {|el| el.text.include? @bug_issue}
     if my_bug_issue
-      my_bug_issue.click
+      @my_bug_issue.click
     else
       drop_down_project = @driver.find_element(:id,'project_quick_jump_box')
       option = Selenium::WebDriver::Support::Select.new(drop_down_project)
@@ -260,7 +260,7 @@ class TestPositive < Test::Unit::TestCase
     open_bug_issue
     raise NoBugIssueError, "You not create a bug issue. You can not click to bug issue." unless @my_bug_issue
     
-    my_bug_issue.click
+    @my_bug_issue.click
   rescue NoBugIssueError => e
     puts e.inspect
 
