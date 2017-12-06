@@ -154,5 +154,13 @@ module OurModule
     @wait.until {@driver.find_element(:id,'flash_notice').displayed?}
 
   end
+  
+  def open_bug_issue
+    @driver.find_element(:class,'my-page').click
+    @wait.until {@driver.find_element(:class,'mypage-box').displayed?}
+
+    classes_els = @driver.find_elements(:css,'.subject > a')
+    @my_bug_issue = classes_els.find {|el| el.text.include? @bug_issue}
+  end
 
 end
