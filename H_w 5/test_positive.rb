@@ -258,7 +258,7 @@ class TestPositive < Test::Unit::TestCase
       puts "Your random action: not create a new bug issue"
     end
     open_bug_issue
-    raise NoBugIssueError, "You not create a bug issue. You can not click to bug issue." unless my_bug_issue
+    raise NoBugIssueError, "You not create a bug issue. You can not click to bug issue." unless @my_bug_issue
     
     my_bug_issue.click
   rescue NoBugIssueError => e
