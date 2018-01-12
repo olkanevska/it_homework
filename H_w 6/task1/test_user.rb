@@ -15,7 +15,7 @@ class TestUser < Test::Unit::TestCase
   def test_rename_board
     user = User.new
     board = user.add_board("car")
-    expect("avto").to eql user.rename_board(board, "avto")
+    expect(user.rename_board(board, "avto")).to eql("avto")
   end
 
   def test_add_list
@@ -58,7 +58,7 @@ class TestUser < Test::Unit::TestCase
     now_list = user.add_list(board,"modern car")
     new_list = user.add_list(board,"retro car")
     card = user.add_card("volga",now_list)
-    expect(new_list).to equal user.move_card_to_another_list(card, now_list,new_list)
+    expect(user.move_card_to_another_list(card, now_list,new_list)).to equal(new_list)
   end
 
   def test_move_card_to_another_position
@@ -67,7 +67,7 @@ class TestUser < Test::Unit::TestCase
    list = user.add_list(board,"my car")
    card1 = user.add_card("shcoda",list)
    card2 = user.add_card("volga",list)
-   expect(2).to equal user.move_card_to_another_position(list,card1,2)
+   expect(user.move_card_to_another_position(list,card1,2)).to equal(2)
   end
 
   def test_remove_card
