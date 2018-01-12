@@ -1,0 +1,19 @@
+1.Go through TryRuby 
+2.Watch videos about:
+ a)Ruby install 
+ b)Rubygems 
+ c)Irb 
+ d)TestUnit 
+ e)Selenium + Watir 
+3.Implement Test class with these test methods: 
+a)Registration 
+b)Log in/Log out 
+c)Change Password 
+d)Create Project 
+e)Add another (your) user to the Project 
+f)Edit their (users’) roles 
+g)Create Project version 
+h)Create all 3 types of issues 
+i)Ensure they are visible on ‘Issues’ tab 
+4.Go through this flow: Create Account on GitHub, and repository, add me as collaborator,  add there tests implemented, make pull request and assign it to me 5.Go through TryGit 
+6.Ask Question
