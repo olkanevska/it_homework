@@ -41,6 +41,12 @@ module OurModule
     @driver.find_element(:id,'username').send_keys @login
     @driver.find_element(:id, 'password').send_keys '1234567890'
   end
+  
+  def logout
+    @wait.until {@driver.find_element(:class,'logout').displayed?}
+    @driver.find_element(:class, 'logout').click
+    @wait.until {@driver.find_element(:class,'login').displayed?}
+  end
 
   def add_new_project
     @wait.until {@driver.find_element(:class,'projects').displayed?}
