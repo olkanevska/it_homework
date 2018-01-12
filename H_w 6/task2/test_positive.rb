@@ -14,7 +14,7 @@ class TestPositive < Test::Unit::TestCase
     @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
   end
 
-  def test_positive
+  def test_register_user
     register_user
 
     flash_notice = @driver.find_element(:id, 'flash_notice')
@@ -23,12 +23,8 @@ class TestPositive < Test::Unit::TestCase
 
   def test_log_out
     register_user
-
-    @wait.until {@driver.find_element(:class,'logout').displayed?}
-    @driver.find_element(:class, 'logout').click
-
-    @wait.until {@driver.find_element(:class,'login').displayed?}
-
+    logout
+    
     login_button = @driver.find_element(:class, 'login')
 
     expect(login_button).to be_displayed
@@ -36,23 +32,11 @@ class TestPositive < Test::Unit::TestCase
 
   def test_log_in
     register_user
-    @wait.until {@driver.find_element(:class,'logout').displayed?}
-    @driver.find_element(:class, 'logout').click
-
-    @wait.until {@driver.find_element(:class,'login').displayed?}
-
-    @driver.find_element(:class,'login').click
-
-    @wait.until {@driver.find_element(:id,'username').displayed?}
-
+    logout
     login_user
 
-    @driver.find_element(:name,'login').click
-
-    @wait.until {@driver.find_element(:class,'my-account').displayed?}
-    account_button = @driver.find_element(:class,'my-account')
-
-    expect(account_button).to be_displayed
+    @wait.until {@driver.find_element(:id, 'loggedas').displayed?}
+    expect(@driver.find_element(:id, 'loggedas').text).not_to be_nil
   end
 
   def test_lost_password
@@ -79,10 +63,7 @@ class TestPositive < Test::Unit::TestCase
 
   def test_add_another_user
     register_user
-    @wait.until {@driver.find_element(:class,'logout').displayed?}
-    @driver.find_element(:class, 'logout').click
-    @wait.until {@driver.find_element(:class,'login').displayed?}
-
+    logout
     register_user1
     add_new_project
     add_another_user
@@ -93,10 +74,7 @@ class TestPositive < Test::Unit::TestCase
 
   def test_edit_roles
     register_user
-    @wait.until {@driver.find_element(:class,'logout').displayed?}
-    @driver.find_element(:class, 'logout').click
-    @wait.until {@driver.find_element(:class,'login').displayed?}
-
+    logout
     register_user1
     add_new_project
     @driver.find_element(:id, 'tab-members').click
@@ -108,7 +86,7 @@ class TestPositive < Test::Unit::TestCase
 
     expected_text = 'Developer'
     actual_text = type_issue[index].text
-    expect(expected_text).to eql actual_text
+    expect(actual_text).to eql expected_text
   end
 
   def test_create_project_version
@@ -147,7 +125,7 @@ class TestPositive < Test::Unit::TestCase
 
     expected_text = 'Feature'
     actual_text = type_issue[index].text
-    expect(expected_text).to eql actual_text
+    expect(actual_text).to eql expected_text
   end
 
   def test_support_types_issue
@@ -178,8 +156,7 @@ class TestPositive < Test::Unit::TestCase
 
     expected_text = 'Support'
     actual_text = type_issue[index].text
-    expect(expected_text).to eql actual_text
-
+    expect(actual_text).to eql expected_text
   end
 
   def test_bug_types_issue
@@ -206,7 +183,7 @@ class TestPositive < Test::Unit::TestCase
 
     expected_text = 'Bug'
     actual_text = type_issue[index].text
-    expect(expected_text).to eql actual_text
+    expect(actual_text).to eql expected_text
   end
 
   def test_create_or_not_bug_issue_whit_watcher
