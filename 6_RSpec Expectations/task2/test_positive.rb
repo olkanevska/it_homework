@@ -157,8 +157,8 @@ class TestPositive < Test::Unit::TestCase
     expect(issue.map(&:text)).to include @bug_issue
   end
 
-  #def teardown
-  #  @driver.quit
-  #end
+  def teardown
+    @driver.quit
+  end
 
 end
