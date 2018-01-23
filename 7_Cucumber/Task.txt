@@ -1,0 +1,5 @@
+1. Add to your current solution appropriate files and folders structure (for Cucumber project)
+
+2. Create a separate Cucumber solution inside your main project which should cover all test scenarios from your old project part
+
+NOTE: We should have both test solutions (test-unit and cucumber) working inside our project
