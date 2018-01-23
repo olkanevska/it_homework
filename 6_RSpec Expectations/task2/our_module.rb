@@ -38,10 +38,14 @@ module OurModule
   end
 
   def login_user
+    @driver.find_element(:class,'login').click
+    @wait.until {@driver.find_element(:id,'username').displayed?}
     @driver.find_element(:id,'username').send_keys @login
     @driver.find_element(:id, 'password').send_keys '1234567890'
+    @driver.find_element(:name,'login').click
+    @wait.until {@driver.find_element(:id, 'loggedas').displayed?}
   end
-  
+
   def logout
     @wait.until {@driver.find_element(:class,'logout').displayed?}
     @driver.find_element(:class, 'logout').click
@@ -92,7 +96,8 @@ module OurModule
     @wait.until {@driver.find_element(:id,'flash_notice').displayed?}
   end
 
-  def edit_roles
+  def edit_roles(role_ex, new_role, text_new_role)
+    @driver.find_element(:id, 'tab-members').click
     @driver.find_element(:css, 'a.icon.icon-edit').click
 
     @wait.until {@driver.find_elements(:css, '*[name="membership[role_ids][]"]').first.displayed?}
@@ -101,22 +106,24 @@ module OurModule
 
     roles_chbxs = @driver.find_elements(:css, '*[name="membership[role_ids][]"]')
 
-    index = roles_chbxs.index {|chbx| chbx.attribute("value")== @roles[:manager] }
+    index_role_ex = roles_chbxs.index {|chbx| chbx.attribute("value")== @roles[role_ex] }
 
-    roles_chbxs[index].click
+    roles_chbxs[index_role_ex].click
 
-    index1 = roles_chbxs.index {|chbx| chbx.attribute("value")== @roles[:developer] }
+    index_role_new = roles_chbxs.index {|chbx| chbx.attribute("value")== @roles[new_role] }
 
-    roles_chbxs[index1].click
+    roles_chbxs[index_role_new].click
 
     @driver.find_element(:css, 'input.small[name=commit]').click
 
-    @wait.until {@driver.find_element(:id,'flash_notice').displayed?}
+    @wait.until {@driver.find_element(:css,'.roles span').displayed?}
 
+    @type_issue = @driver.find_elements(:class, 'roles')
+
+    @index = @type_issue.index {|chbx| chbx.text == text_new_role}
   end
 
   def create_project_version
-
     @driver.find_element(:id, 'tab-versions').click
 
     @wait.until {@driver.find_element(:css,'#tab-content-versions .icon-add').displayed?}
@@ -144,10 +151,10 @@ module OurModule
     @driver.find_element(:id, 'issue_subject').send_keys @bug_issue
 
     @driver.find_element(:name,'commit').click
-
   end
 
   def lost_password
+    @driver.find_element(:class,'login').click
 
     @wait.until {@driver.find_element(:css, '#login-form td a').displayed?}
     @driver.find_element(:css, '#login-form td a').click
@@ -158,7 +165,18 @@ module OurModule
     @driver.find_element(:name, 'commit').click
 
     @wait.until {@driver.find_element(:id,'flash_notice').displayed?}
+  end
 
+  def add_or_not_bug_issue
+    x = rand(1..2)
+
+    if x == 1
+      add_new_issue
+
+      puts "Your random action: create a new bug issue"
+    else
+      puts "Your random action: not create a new bug issue"
+    end
   end
 
   def open_bug_issue
@@ -167,6 +185,62 @@ module OurModule
 
     classes_els = @driver.find_elements(:css,'.subject > a')
     @my_bug_issue = classes_els.find {|el| el.text.include? @bug_issue}
+  end
+
+  def select_project
+    drop_down_project = @driver.find_element(:id,'project_quick_jump_box')
+    option = Selenium::WebDriver::Support::Select.new(drop_down_project)
+    option.select_by(:text, @project_name)
+  end
+
+  def add_new_issue_if_you_not_have
+    if @my_bug_issue
+      @my_bug_issue.click
+    else
+      select_project
+      add_new_issue
+    end
+  end
+
+  def add_an_watcher
+    @wait.until {@driver.find_element(:class,'contextual').displayed?}
+    @driver.find_element(:class,'contextual').click
+
+    @wait.until {@driver.find_element(:id,'ui-id-3').displayed?}
+    watcher = @driver.find_elements(:css,'#users_for_watcher > label')
+    my_watcher = watcher.find {|el| el.text.include? 'Olena Kanevska'}
+    my_watcher.click
+    @driver.find_element(:css,'.buttons>input[type="submit"]').click
+    @wait.until {@driver.find_element(:class,'watchers').displayed?}
+
+    @issue = @driver.find_elements(:class,'subject')
+    @classes_watch = @driver.find_elements(:class,'watchers')
+  end
+
+  def add_issue_subject
+    @driver.find_element(:class,'new-issue').click
+    @wait.until {@driver.find_element(:id,'issue_tracker_id').displayed?}
+
+    @driver.find_element(:id, 'issue_subject').send_keys 'Exhaustive testing is impossible'
+  end
+
+  def switching_type_issue (type)
+  @driver.find_element(:name,'issue[status_id]').click
+
+  drop_down_types = @driver.find_element(:id,'issue_tracker_id')
+  @option = Selenium::WebDriver::Support::Select.new(drop_down_types)
+
+  @option.select_by(:text, type)
+
+  @driver.find_element(:name,'continue').click
+
+  @driver.find_element(:class,'issues').click
+
+  @wait.until {@driver.find_elements(:css, '.tracker').first.displayed?}
+
+  @type_issue = @driver.find_elements(:css, '.tracker')
+
+  @index = @type_issue.index {|chbx| chbx.text == type}
   end
 
 end
