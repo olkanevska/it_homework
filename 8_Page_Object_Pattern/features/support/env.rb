@@ -1,0 +1,23 @@
+require 'selenium-webdriver'
+require'rspec/expectations'
+require_relative 'no_bug_issue_error'
+require 'faker'
+require_relative 'models/user'
+require_relative 'lib/pages/registration_page'
+require_relative 'lib/pages/projects_versions_page'
+require_relative 'lib/pages/projects_versions_new_page'
+require_relative 'lib/pages/projects_settings_page'
+require_relative 'lib/pages/projects_page'
+require_relative 'lib/pages/projects_new_page'
+require_relative 'lib/pages/projects_members_page'
+require_relative 'lib/pages/projects_issues_new_page'
+require_relative 'lib/pages/my_page'
+require_relative 'lib/pages/my_account_page'
+require_relative 'lib/pages/lost_password_page'
+require_relative 'lib/pages/login_page'
+require_relative 'lib/pages/issues_page'
+require_relative 'lib/pages/home_page'
+require_relative 'lib/pages/base_page'
+
+World(RSpec::Matchers) #to make rspec matchers work
+World(Faker)
