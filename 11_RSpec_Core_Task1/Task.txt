@@ -1,0 +1,8 @@
+1. Create unit tests for couple your Trello models
+
+2. Create appropriate files and folders structure needed to add an RSpec test solution to our current main project
+
+3. Implement all your current test scenarios using PageObject gem
+
+use describes and its
+use before hooks to execute prerequisites
